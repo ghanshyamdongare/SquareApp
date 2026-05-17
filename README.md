@@ -2,6 +2,10 @@
 
 A production-ready **multi-module Android application** built with **Jetpack Compose**, **Clean Architecture**, **MVVM**, **Hilt DI**, and **Kotlin**. Features modern networking, image loading, and centralized dependency management via Gradle Version Catalogs.
 
+[square_repo_003.webm](https://github.com/user-attachments/assets/404b4ec8-e54f-41ad-b740-98a2617c001f)
+
+
+
 ## 🏗️ Project Structure
 
 com.gd.squareapp # Application/
