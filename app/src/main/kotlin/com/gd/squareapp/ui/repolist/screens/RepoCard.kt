@@ -30,10 +30,17 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.gd.domain.model.Repo
 import com.gd.sqaureapp.R
 import com.gd.squareapp.ui.theme.DeepBlack
+import com.gd.squareapp.ui.theme.Dimen
+import com.gd.squareapp.ui.theme.Dimen.FontSize
+import com.gd.squareapp.ui.theme.Dimen.LineHeight
+import com.gd.squareapp.ui.theme.Dimen.PaddingLarge
+import com.gd.squareapp.ui.theme.Dimen.PaddingMedium
+import com.gd.squareapp.ui.theme.Dimen.PaddingMedium_12
+import com.gd.squareapp.ui.theme.Dimen.PaddingSmall
+import com.gd.squareapp.ui.theme.Dimen.StandardSize
 import com.gd.squareapp.ui.theme.ElectricRed
 import com.gd.squareapp.ui.theme.MutedGrey
 import com.gd.squareapp.ui.theme.SoftWhite
@@ -47,15 +54,15 @@ fun RepoCard(repo: Repo) {
             .border(
                 width = 0.5.dp,
                 color = DeepBlack.copy(alpha = 0.4f),
-                shape = RoundedCornerShape(16.dp)
+                shape = RoundedCornerShape(Dimen.PaddingMedium)
             ),
         colors = CardDefaults.cardColors(Color.Black, SurfaceGrey.copy(alpha = 0.4f), MutedGrey),
-        shape = RoundedCornerShape(16.dp),
-        elevation = CardDefaults.cardElevation(8.dp)
+        shape = RoundedCornerShape(Dimen.PaddingMedium),
+        elevation = CardDefaults.cardElevation(PaddingSmall)
     ) {
         Column(
             modifier = Modifier
-                .padding(16.dp)
+                .padding(PaddingMedium)
         ) {
             // Header: Owner Avatar + Name + Private Badge
             Row(
@@ -63,10 +70,9 @@ fun RepoCard(repo: Repo) {
                 modifier = Modifier
                     .fillMaxWidth()
             ) {
-                // Placeholder for Owner Image (Using a Red Circle with Initial)
                 Box(
                     modifier = Modifier
-                        .size(40.dp)
+                        .size(StandardSize)
                         .clip(CircleShape)
                         .background(ElectricRed),
                     contentAlignment = Alignment.Center
@@ -78,7 +84,7 @@ fun RepoCard(repo: Repo) {
                     )
                 }
 
-                Spacer(modifier = Modifier.width(12.dp))
+                Spacer(modifier = Modifier.width(PaddingMedium_12))
 
                 Column(modifier = Modifier.weight(1f)) {
                     Text(
@@ -100,7 +106,7 @@ fun RepoCard(repo: Repo) {
                 PrivacyBadge(isPrivate = repo.isPrivate)
             }
 
-            Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(PaddingMedium_12))
 
             // Description
             Text(
@@ -108,11 +114,11 @@ fun RepoCard(repo: Repo) {
                 style = MaterialTheme.typography.bodyMedium,
                 color = SoftWhite,
                 maxLines = 3,
-                lineHeight = 20.sp,
+                lineHeight = LineHeight,
                 overflow = TextOverflow.Ellipsis
             )
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(PaddingMedium))
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -124,14 +130,14 @@ fun RepoCard(repo: Repo) {
                         imageVector = Icons.Default.Favorite,
                         contentDescription = null,
                         tint = ElectricRed,
-                        modifier = Modifier.size(24.dp)
+                        modifier = Modifier.size(PaddingLarge)
                     )
-                    Spacer(modifier = Modifier.width(8.dp))
+                    Spacer(modifier = Modifier.width(PaddingSmall))
                     Text(
                         text = repo.watchers.toString(),
                         color = SoftWhite,
                         fontWeight = FontWeight.Bold,
-                        fontSize = 14.sp
+                        fontSize = FontSize
                     )
                 }
             }

@@ -20,10 +20,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.text.font.FontWeight
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.gd.sqaureapp.R
 import com.gd.squareapp.ui.repolist.RepoListViewModel
+import com.gd.squareapp.ui.theme.Dimen
 import com.gd.squareapp.ui.theme.ElectricRed
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -37,7 +38,7 @@ fun RepoListScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(stringResource(state.toolbarUiState.title)) },
+                title = { Text(stringResource(state.toolbarUiState.title), fontWeight = FontWeight.Bold) },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = ElectricRed,
                     titleContentColor = Color.White,
@@ -58,8 +59,8 @@ fun RepoListScreen(
         }
     ) { padding ->
         LazyColumn(
-            contentPadding = PaddingValues(16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
+            contentPadding = PaddingValues(Dimen.PaddingMedium),
+            verticalArrangement = Arrangement.spacedBy(Dimen.PaddingMedium_12),
             modifier = Modifier.padding(padding)
         ) {
             items(state.repos) { repo ->
