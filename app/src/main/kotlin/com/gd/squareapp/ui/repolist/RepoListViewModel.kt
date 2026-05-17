@@ -6,6 +6,7 @@ import com.gd.domain.model.RepoResult
 import com.gd.domain.usecase.GetSquareProjectListUseCase
 import com.gd.squareapp.ui.repolist.state.RepoListUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -17,6 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 class RepoListViewModel @Inject constructor(
     val getSquareProjects: GetSquareProjectListUseCase,
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : ViewModel() {
     private val _repoListUiState = MutableStateFlow(RepoListUiState())
     val repoListUiState = _repoListUiState.asStateFlow()
@@ -28,7 +30,7 @@ class RepoListViewModel @Inject constructor(
     private fun getProjectList() {
         viewModelScope.launch {
             updateLoadingState(true)
-            val result = withContext(Dispatchers.IO) { getSquareProjects() }
+            val result = withContext(ioDispatcher) { getSquareProjects() }
             updateLoadingState(false)
             when (result) {
                 is RepoResult.Success -> {
