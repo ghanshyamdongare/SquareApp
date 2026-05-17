@@ -3,7 +3,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.hilt.android)
-    alias(libs.plugins.kotlinKapt)
+    alias(libs.plugins.google.devtools.ksp)
 }
 
 android {
@@ -52,6 +52,10 @@ android {
 }
 
 dependencies {
+    implementation(project(":domain"))
+    implementation(project(":gateway"))
+    implementation(project(":data"))
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -62,6 +66,7 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.material)
+    implementation(libs.hilt.core)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.material.icons.extended)
     implementation(libs.androidx.ui.util)
@@ -70,8 +75,8 @@ dependencies {
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.hilt.android)
     implementation(libs.coil.compose)
+    ksp(libs.hilt.android.compiler)
     implementation(libs.androidx.core.splashscreen)
-    kapt(libs.hilt.android.compiler)
 
     implementation(libs.javax.inject)
     implementation(libs.kotlinx.coroutines.core)

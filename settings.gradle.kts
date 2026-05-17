@@ -21,4 +21,6 @@ dependencyResolutionManagement {
 
 rootProject.name = "SquareApp"
 include(":app")
- 
+include(":domain")
+include(":gateway")
+include(":data")
