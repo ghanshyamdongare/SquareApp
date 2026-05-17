@@ -25,7 +25,10 @@ class RepoListFragment : Fragment() {
             setContent {
                 MaterialTheme {
                     val viewModel: RepoListViewModel = hiltViewModel()
-                    RepoListScreen()
+                    RepoListScreen(viewModel, onBackClick = {
+                        requireActivity().finish()
+                    }
+                    )
                 }
             }
         }
