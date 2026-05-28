@@ -7,4 +7,9 @@
     <string name="error_dialog_title">Error</string>
     <string name="error_dialog_description">Something went wrong, please try again later</string>
     <string name="error_dialog_button_text">Dismiss</string>
+    <string name="about_the_repo">About the repo</string>
+    <string name="watcher">Watcher</string>
+    <string name="private_name">Private</string>
+    <string name="public_name">Public</string>
+    <string name="visibility">Visibility</string>
 </resources>

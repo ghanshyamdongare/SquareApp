@@ -57,7 +57,7 @@ fun RepoCard(repo: Repo) {
                 shape = RoundedCornerShape(Dimen.PaddingMedium)
             ),
         colors = CardDefaults.cardColors(Color.Black, SurfaceGrey.copy(alpha = 0.4f), MutedGrey),
-        shape = RoundedCornerShape(Dimen.PaddingMedium),
+        shape = RoundedCornerShape(PaddingMedium),
         elevation = CardDefaults.cardElevation(PaddingSmall)
     ) {
         Column(

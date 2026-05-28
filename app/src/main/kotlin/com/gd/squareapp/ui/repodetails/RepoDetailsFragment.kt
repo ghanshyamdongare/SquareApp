@@ -1,7 +1,6 @@
 package com.gd.squareapp.ui.repodetails
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,8 +9,13 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import com.gd.squareapp.ui.repodetails.event.RepoDetailsEvent
 import com.gd.squareapp.ui.repodetails.screen.RepoDetailsScreen
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 private const val REPO_NAME = "repoName"
 
@@ -28,7 +32,6 @@ class RepoDetailsFragment : Fragment() {
             viewModel.fetchRepoDetails(it)
         }
 
-        Log.d("RepoDetailsFragment", "repoName")
         return ComposeView(requireContext()).apply {
             setViewCompositionStrategy(
                 ViewCompositionStrategy.DisposeOnLifecycleDestroyed(viewLifecycleOwner)
@@ -36,6 +39,25 @@ class RepoDetailsFragment : Fragment() {
             setContent {
                 MaterialTheme {
                     RepoDetailsScreen(viewModel = viewModel)
+                }
+            }
+        }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        subscribeToEvents()
+    }
+
+    private fun subscribeToEvents() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.event.collect { event ->
+                    when (event) {
+                        is RepoDetailsEvent.OnBackClick -> {
+                            parentFragmentManager.popBackStack()
+                        }
+                    }
                 }
             }
         }

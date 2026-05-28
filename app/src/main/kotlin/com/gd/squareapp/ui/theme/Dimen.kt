@@ -11,8 +11,8 @@ object Dimen {
     val PaddingMedium = 16.dp
     val PaddingLarge = 24.dp
     val IconSize = 12.dp
-    val PullViewSize = 60.dp
     val LoadingViewSize = 100.dp
+    val ImageViewSize = 120.dp
 
     // Standard size
     val StandardSize = 40.dp
