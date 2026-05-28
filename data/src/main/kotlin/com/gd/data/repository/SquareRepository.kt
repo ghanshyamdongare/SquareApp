@@ -7,5 +7,6 @@ import javax.inject.Inject
 class SquareRepository @Inject constructor(
     private val repoListApiService: RepoListApiService,
 ) {
-    suspend fun getSquareRepos(): Result<List<RepoDataItem>> = repoListApiService.getSquareRepos()
+    suspend fun getSquareRepos(): Result<List<RepoDataItem>> =
+        repoListApiService.getSquareRepos()
 }

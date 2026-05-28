@@ -5,6 +5,6 @@ import com.gd.data.datasource.RepoDataItem
 import retrofit2.http.GET
 
 interface RepoListApiService {
-    @GET(Constants.SQUARE_REPO_URL)
+    @GET(Constants.SQUARE_REPOS_URL)
     suspend fun getSquareRepos(): Result<List<RepoDataItem>>
 }
