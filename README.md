@@ -4,6 +4,7 @@ A production-ready **multi-module Android application** built with **Jetpack Com
 
 [square_repo_003.webm](https://github.com/user-attachments/assets/404b4ec8-e54f-41ad-b740-98a2617c001f)
 
+<img width="290" height="620" alt="Square_error_ss" src="https://github.com/user-attachments/assets/6afe8358-aae4-4b68-b31e-1a43dcce9d96" />
 
 
 ## 🏗️ Project Structure
