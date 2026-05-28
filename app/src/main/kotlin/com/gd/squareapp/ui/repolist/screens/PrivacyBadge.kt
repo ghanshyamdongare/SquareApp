@@ -18,7 +18,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
+import com.gd.squareapp.ui.theme.Dimen.BorderWidth
+import com.gd.squareapp.ui.theme.Dimen.IconSize
+import com.gd.squareapp.ui.theme.Dimen.PaddingSmall
+import com.gd.squareapp.ui.theme.Dimen.SpacerWidth
 import com.gd.squareapp.ui.theme.ElectricRed
 import com.gd.squareapp.ui.theme.MutedGrey
 import com.gd.squareapp.ui.theme.SoftWhite
@@ -34,20 +37,20 @@ fun PrivacyBadge(isPrivate: Boolean) {
 
     Surface(
         color = color.copy(alpha = 0.1f),
-        shape = RoundedCornerShape(8.dp),
-        border = BorderStroke(1.dp, color.copy(alpha = 0.5f))
+        shape = RoundedCornerShape(PaddingSmall),
+        border = BorderStroke(BorderWidth, color.copy(alpha = 0.5f))
     ) {
         Row(
-            modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
+            modifier = Modifier.padding(horizontal = PaddingSmall, vertical = SpacerWidth),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(
                 imageVector = icon,
                 contentDescription = null,
                 tint = SoftWhite,
-                modifier = Modifier.size(12.dp)
+                modifier = Modifier.size(IconSize)
             )
-            Spacer(modifier = Modifier.width(4.dp))
+            Spacer(modifier = Modifier.width(SpacerWidth))
             Text(
                 text = text,
                 style = MaterialTheme.typography.labelSmall,

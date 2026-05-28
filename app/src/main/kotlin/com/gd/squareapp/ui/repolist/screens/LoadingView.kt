@@ -12,7 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
+import com.gd.squareapp.ui.theme.Dimen.LoadingViewSize
 
 @Composable
 fun LoadingView(isLoading: Boolean) {
@@ -23,7 +23,7 @@ fun LoadingView(isLoading: Boolean) {
         Box(modifier = Modifier.fillMaxSize()) {
             CircularProgressIndicator(
                 modifier = Modifier
-                    .size(100.dp)
+                    .size(LoadingViewSize)
                     .align(Alignment.Center),
                 color = Color.Red
             )

@@ -2,6 +2,7 @@ package com.gd.squareapp.ui.repolist.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -14,6 +15,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -38,7 +40,12 @@ fun RepoListScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(stringResource(state.toolbarUiState.title), fontWeight = FontWeight.Bold) },
+                title = {
+                    Text(
+                        stringResource(state.toolbarUiState.title),
+                        fontWeight = FontWeight.Bold
+                    )
+                },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = ElectricRed,
                     titleContentColor = Color.White,
@@ -58,13 +65,23 @@ fun RepoListScreen(
             )
         }
     ) { padding ->
-        LazyColumn(
-            contentPadding = PaddingValues(Dimen.PaddingMedium),
-            verticalArrangement = Arrangement.spacedBy(Dimen.PaddingMedium_12),
-            modifier = Modifier.padding(padding)
-        ) {
-            items(state.repos) { repo ->
-                RepoCard(repo)
+        if (state.error != null) {
+            CommonDialog { onBackClick() }
+        } else {
+            PullToRefreshBox(
+                isRefreshing = state.isLoading,
+                onRefresh = { viewModel.refreshProjectList() },
+                modifier = Modifier.fillMaxSize(),
+            ) {
+                LazyColumn(
+                    contentPadding = PaddingValues(Dimen.PaddingMedium),
+                    verticalArrangement = Arrangement.spacedBy(Dimen.PaddingMedium_12),
+                    modifier = Modifier.padding(padding)
+                ) {
+                    items(state.repos) { repo ->
+                        RepoCard(repo)
+                    }
+                }
             }
         }
     }

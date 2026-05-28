@@ -8,7 +8,7 @@ data class RepoListUiState(
     val toolbarUiState: ToolbarUiState = ToolbarUiState(),
     val isLoading: Boolean = false,
     val repos: List<Repo> = emptyList(),
-    val error: String? = null
+    val error: String? = null,
 )
 
 data class ToolbarUiState(

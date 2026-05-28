@@ -48,6 +48,10 @@ class RepoListViewModel @Inject constructor(
         }
     }
 
+    fun refreshProjectList() {
+        getProjectList()
+    }
+
     private fun updateLoadingState(isLoading: Boolean) {
         _repoListUiState.update {
             it.copy(isLoading = isLoading)
