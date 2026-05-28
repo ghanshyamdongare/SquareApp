@@ -22,7 +22,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.window.Dialog
-import com.gd.sqaureapp.R
+import com.gd.squareapp.R
 import com.gd.squareapp.ui.theme.DeepBlack
 import com.gd.squareapp.ui.theme.Dimen.BorderWidth
 import com.gd.squareapp.ui.theme.Dimen.LineHeight

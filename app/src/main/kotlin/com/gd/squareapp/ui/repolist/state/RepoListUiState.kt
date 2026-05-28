@@ -2,7 +2,7 @@ package com.gd.squareapp.ui.repolist.state
 
 import androidx.annotation.StringRes
 import com.gd.domain.model.Repo
-import com.gd.sqaureapp.R
+import com.gd.squareapp.R
 
 data class RepoListUiState(
     val toolbarUiState: ToolbarUiState = ToolbarUiState(),

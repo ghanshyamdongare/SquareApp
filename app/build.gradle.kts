@@ -7,12 +7,12 @@ plugins {
 }
 
 android {
-    namespace = "com.gd.sqaureapp"
+    namespace = "com.gd.squareapp"
     compileSdk = 35
     buildToolsVersion = "35.0.0"
 
     defaultConfig {
-        applicationId = "com.gd.sqaureapp"
+        applicationId = "com.gd.squareapp"
         minSdk = 24
         targetSdk = 35
         versionCode = 3

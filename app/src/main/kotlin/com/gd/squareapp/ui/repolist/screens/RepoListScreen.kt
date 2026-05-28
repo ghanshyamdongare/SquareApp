@@ -24,7 +24,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.gd.sqaureapp.R
+import com.gd.squareapp.R
 import com.gd.squareapp.ui.repolist.RepoListViewModel
 import com.gd.squareapp.ui.theme.Dimen
 import com.gd.squareapp.ui.theme.ElectricRed
