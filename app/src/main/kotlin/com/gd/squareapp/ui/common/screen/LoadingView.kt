@@ -1,4 +1,4 @@
-package com.gd.squareapp.ui.repolist.screens
+package com.gd.squareapp.ui.common.screen
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
@@ -15,7 +15,7 @@ import androidx.compose.ui.graphics.Color
 import com.gd.squareapp.ui.theme.Dimen.LoadingViewSize
 
 @Composable
-fun LoadingView(isLoading: Boolean) {
+internal fun LoadingView(isLoading: Boolean) {
     AnimatedVisibility(
         isLoading,
         enter = fadeIn() + expandVertically()

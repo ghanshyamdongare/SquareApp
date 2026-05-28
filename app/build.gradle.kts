@@ -78,6 +78,7 @@ dependencies {
     implementation(libs.androidx.compose.material3)
     ksp(libs.hilt.android.compiler)
     implementation(libs.androidx.core.splashscreen)
+    implementation(libs.androidx.fragment.ktx)
 
     implementation(libs.javax.inject)
     implementation(libs.kotlinx.coroutines.core)

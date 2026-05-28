@@ -1,5 +1,6 @@
 package di
 
+import com.gd.data.api.RepoDetailApiService
 import com.gd.data.api.RepoListApiService
 import com.gd.data.common.Constants.BASE_URL
 import com.skydoves.retrofit.adapters.result.ResultCallAdapterFactory
@@ -46,7 +47,11 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideRepoListApiService(retrofit: Retrofit): RepoListApiService {
-        return retrofit.create(RepoListApiService::class.java)
-    }
+    fun provideRepoListApiService(retrofit: Retrofit): RepoListApiService =
+        retrofit.create(RepoListApiService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideRepoDetailApiService(retrofit: Retrofit): RepoDetailApiService =
+        retrofit.create(RepoDetailApiService::class.java)
 }

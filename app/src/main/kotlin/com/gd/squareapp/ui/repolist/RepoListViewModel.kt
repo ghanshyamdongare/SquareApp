@@ -2,13 +2,16 @@ package com.gd.squareapp.ui.repolist
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.gd.domain.model.RepoResult
+import com.gd.domain.model.ReposResult
 import com.gd.domain.usecase.GetSquareProjectListUseCase
+import com.gd.squareapp.ui.repolist.event.RepoListEvent
 import com.gd.squareapp.ui.repolist.state.RepoListUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -23,6 +26,9 @@ class RepoListViewModel @Inject constructor(
     private val _repoListUiState = MutableStateFlow(RepoListUiState())
     val repoListUiState = _repoListUiState.asStateFlow()
 
+    private val _event = MutableSharedFlow<RepoListEvent>()
+    val event = _event.asSharedFlow()
+
     init {
         getProjectList()
     }
@@ -33,13 +39,13 @@ class RepoListViewModel @Inject constructor(
             val result = withContext(ioDispatcher) { getSquareProjects() }
             updateLoadingState(false)
             when (result) {
-                is RepoResult.Success -> {
+                is ReposResult.Data -> {
                     _repoListUiState.update {
                         it.copy(repos = result.repos)
                     }
                 }
 
-                is RepoResult.Error -> {
+                is ReposResult.Error -> {
                     _repoListUiState.update {
                         it.copy(error = result.errorMessage)
                     }
@@ -55,6 +61,12 @@ class RepoListViewModel @Inject constructor(
     private fun updateLoadingState(isLoading: Boolean) {
         _repoListUiState.update {
             it.copy(isLoading = isLoading)
+        }
+    }
+
+    fun onRepoListEvent(event: RepoListEvent) {
+        viewModelScope.launch {
+            _event.emit(event)
         }
     }
 }

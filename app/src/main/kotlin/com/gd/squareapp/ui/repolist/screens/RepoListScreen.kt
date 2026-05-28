@@ -1,8 +1,11 @@
 package com.gd.squareapp.ui.repolist.screens
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -25,18 +28,20 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.gd.squareapp.R
+import com.gd.squareapp.ui.common.screen.CommonDialog
+import com.gd.squareapp.ui.common.screen.LoadingView
 import com.gd.squareapp.ui.repolist.RepoListViewModel
+import com.gd.squareapp.ui.repolist.event.RepoListEvent
+import com.gd.squareapp.ui.repolist.state.RepoListUiState
 import com.gd.squareapp.ui.theme.Dimen
 import com.gd.squareapp.ui.theme.ElectricRed
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RepoListScreen(
+internal fun RepoListScreen(
     viewModel: RepoListViewModel = hiltViewModel(),
-    onBackClick: () -> Unit,
 ) {
-    val state by viewModel.repoListUiState.collectAsState()
-
+    val state by viewModel.repoListUiState.collectAsState(RepoListUiState())
     Scaffold(
         topBar = {
             TopAppBar(
@@ -54,7 +59,7 @@ fun RepoListScreen(
                 ),
                 navigationIcon = {
                     if (state.toolbarUiState.isBackVisible) {
-                        IconButton(onClick = onBackClick) {
+                        IconButton(onClick = { viewModel.onRepoListEvent(RepoListEvent.OnBackClick) }) {
                             Icon(
                                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                                 contentDescription = stringResource(R.string.back_button_text)
@@ -66,7 +71,7 @@ fun RepoListScreen(
         }
     ) { padding ->
         if (state.error != null) {
-            CommonDialog { onBackClick() }
+            CommonDialog { viewModel.onRepoListEvent(RepoListEvent.OnBackClick) }
         } else {
             PullToRefreshBox(
                 isRefreshing = state.isLoading,
@@ -79,7 +84,15 @@ fun RepoListScreen(
                     modifier = Modifier.padding(padding)
                 ) {
                     items(state.repos) { repo ->
-                        RepoCard(repo)
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable {
+                                    viewModel.onRepoListEvent(RepoListEvent.OnListItemClick(repo.name))
+                                }
+                        ) {
+                            RepoCard(repo)
+                        }
                     }
                 }
             }

@@ -1,4 +1,4 @@
-package com.gd.squareapp.ui.repolist.screens
+package com.gd.squareapp.ui.common.screen
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
@@ -34,7 +34,7 @@ import com.gd.squareapp.ui.theme.SoftWhite
 import com.gd.squareapp.ui.theme.SurfaceGrey
 
 @Composable
-fun CommonDialog(
+internal fun CommonDialog(
     onDismiss: () -> Unit
 ) {
     Dialog(onDismissRequest = onDismiss) {
