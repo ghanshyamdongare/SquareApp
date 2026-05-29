@@ -1,9 +1,11 @@
 package com.gd.squareapp.ui.repolist
 
+import app.cash.turbine.test
 import com.gd.domain.model.Repo
 import com.gd.domain.model.RepoOwner
-import com.gd.domain.model.RepoResult
+import com.gd.domain.model.ReposResult
 import com.gd.domain.usecase.GetSquareProjectListUseCase
+import com.gd.squareapp.ui.repolist.event.RepoListEvent
 import com.gd.squareapp.ui.repolist.state.RepoListUiState
 import io.mockk.coEvery
 import io.mockk.mockk
@@ -40,7 +42,7 @@ class RepoListViewModelTest {
     fun `Given use case return success when view model invoked then verify ui state`() = runTest {
         val expected = RepoListUiState(repos = repoList)
         // Given
-        coEvery { getSquareProjects() } returns RepoResult.Success(repoList)
+        coEvery { getSquareProjects() } returns ReposResult.Data(repoList)
 
         // When
         viewModel = RepoListViewModel(getSquareProjects, testDispatcher)
@@ -53,12 +55,29 @@ class RepoListViewModelTest {
     fun `Given use case return error when view model invoked then verify ui state`() = runTest {
         val expected = RepoListUiState(error = "test error message")
         // Given
-        coEvery { getSquareProjects() } returns RepoResult.Error("test error message")
+        coEvery { getSquareProjects() } returns ReposResult.Error("test error message")
         // When
         viewModel = RepoListViewModel(getSquareProjects, testDispatcher)
         testDispatcher.scheduler.advanceUntilIdle()
         // Then
         assertEquals(expected, viewModel.repoListUiState.value)
+    }
+
+    @Test
+    fun `Given view model when back event is triggered then verify event`() = runTest {
+        // Given
+        coEvery { getSquareProjects() } returns ReposResult.Data(repoList)
+        viewModel = RepoListViewModel(getSquareProjects, testDispatcher)
+
+        testDispatcher.scheduler.advanceUntilIdle()
+
+        viewModel.event.test {
+            viewModel.onRepoListEvent(RepoListEvent.OnBackClick)
+
+            assertEquals(RepoListEvent.OnBackClick, awaitItem())
+
+            cancelAndIgnoreRemainingEvents()
+        }
     }
 
     companion object {
