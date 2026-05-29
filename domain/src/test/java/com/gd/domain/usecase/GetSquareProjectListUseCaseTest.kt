@@ -3,7 +3,7 @@ package com.gd.domain.usecase
 import com.gd.domain.gateway.SquareGateway
 import com.gd.domain.model.Repo
 import com.gd.domain.model.RepoOwner
-import com.gd.domain.model.RepoResult
+import com.gd.domain.model.ReposResult
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
@@ -26,21 +26,21 @@ class GetSquareProjectListUseCaseTest {
     @Test
     fun `Given gateway returns success, when use case is invoked, then return success`() = runTest {
         // Given
-        coEvery { squareRepoGateway.getRepoList() } returns RepoResult.Success(repoList)
+        coEvery { squareRepoGateway.getRepoList() } returns ReposResult.Data(repoList)
         // When
         val result = useCase()
         // Then
-        assertEquals(RepoResult.Success(repoList), result)
+        assertEquals(ReposResult.Data(repoList), result)
     }
 
     @Test
     fun `Given gateway returns error, when use case is invoked, then return error`() = runTest {
         // Given
-        coEvery { squareRepoGateway.getRepoList() } returns RepoResult.Error(TEST_ERROR)
+        coEvery { squareRepoGateway.getRepoList() } returns ReposResult.Error(TEST_ERROR)
         // When
         val result = useCase()
         // Then
-        assertEquals(RepoResult.Error(TEST_ERROR), result)
+        assertEquals(ReposResult.Error(TEST_ERROR), result)
     }
 
     companion object {

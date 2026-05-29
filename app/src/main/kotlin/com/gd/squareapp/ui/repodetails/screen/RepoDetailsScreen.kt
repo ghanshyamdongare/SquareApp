@@ -92,7 +92,7 @@ internal fun RepoDetailsScreen(viewModel: RepoDetailsViewModel = hiltViewModel()
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(color = Color.White)
+                .background(color = Color.Black)
                 .padding(padding)
         ) {
             state.repo?.let { repo ->
