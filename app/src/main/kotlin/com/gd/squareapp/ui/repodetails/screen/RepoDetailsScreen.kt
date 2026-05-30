@@ -43,6 +43,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.gd.squareapp.R
+import com.gd.squareapp.ui.common.screen.CommonDialog
 import com.gd.squareapp.ui.common.screen.LoadingView
 import com.gd.squareapp.ui.repodetails.RepoDetailsViewModel
 import com.gd.squareapp.ui.repodetails.event.RepoDetailsEvent
@@ -89,114 +90,120 @@ internal fun RepoDetailsScreen(viewModel: RepoDetailsViewModel = hiltViewModel()
             )
         }
     ) { padding ->
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(color = Color.Black)
-                .padding(padding)
-        ) {
-            state.repo?.let { repo ->
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(Color.Black)
-                        .padding(Dimen.PaddingMedium)
-                ) {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        AsyncImage(
-                            model = repo.repoOwner.avatarUrl,
-                            contentDescription = null,
-                            modifier = Modifier
-                                .size(ImageViewSize)
-                                .clip(CircleShape)
-                                .border(BorderWidth, ElectricRed, CircleShape),
-                            contentScale = ContentScale.Crop
-                        )
-                        Spacer(modifier = Modifier.width(Dimen.PaddingMedium))
-                        Column {
-                            Text(
-                                text = repo.name,
-                                color = SoftWhite,
-                                style = MaterialTheme.typography.headlineMedium,
-                                fontWeight = FontWeight.Black
+        if (state.error != null) {
+            CommonDialog { viewModel.onRepoDetailsEvent(RepoDetailsEvent.OnBackClick) }
+        } else {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(color = Color.Black)
+                    .padding(padding)
+            ) {
+                state.repo?.let { repo ->
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(Color.Black)
+                            .padding(Dimen.PaddingMedium)
+                    ) {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            AsyncImage(
+                                model = repo.repoOwner.avatarUrl,
+                                contentDescription = null,
+                                modifier = Modifier
+                                    .size(ImageViewSize)
+                                    .clip(CircleShape)
+                                    .border(BorderWidth, ElectricRed, CircleShape),
+                                contentScale = ContentScale.Crop
                             )
-                            Text(
-                                text = "@${repo.repoOwner.login}",
-                                color = ElectricRed,
-                                style = MaterialTheme.typography.titleMedium
+                            Spacer(modifier = Modifier.width(Dimen.PaddingMedium))
+                            Column {
+                                Text(
+                                    text = repo.name,
+                                    color = SoftWhite,
+                                    style = MaterialTheme.typography.headlineMedium,
+                                    fontWeight = FontWeight.Black
+                                )
+                                Text(
+                                    text = "@${repo.repoOwner.login}",
+                                    color = ElectricRed,
+                                    style = MaterialTheme.typography.titleMedium
+                                )
+                            }
+                        }
+
+                        Spacer(modifier = Modifier.height(Dimen.PaddingLarge))
+
+                        // Stats Row
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.spacedBy(Dimen.PaddingMedium)
+                        ) {
+                            InfoCard(
+                                modifier = Modifier.weight(1f),
+                                icon = Icons.Default.Favorite,
+                                label = stringResource(R.string.watcher),
+                                value = repo.watchers.toString()
+                            )
+                            InfoCard(
+                                modifier = Modifier.weight(1f),
+                                icon = if (repo.isPrivate) Icons.Default.Person else Icons.Default.Person,
+                                label = stringResource(R.string.visibility),
+                                value = if (repo.isPrivate) stringResource(R.string.private_name) else stringResource(
+                                    R.string.public_name
+                                )
                             )
                         }
-                    }
 
-                    Spacer(modifier = Modifier.height(Dimen.PaddingLarge))
+                        Spacer(modifier = Modifier.height(Dimen.PaddingLarge))
 
-                    // Stats Row
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(Dimen.PaddingMedium)
-                    ) {
-                        InfoCard(
-                            modifier = Modifier.weight(1f),
-                            icon = Icons.Default.Favorite,
-                            label = stringResource(R.string.watcher),
-                            value = repo.watchers.toString()
-                        )
-                        InfoCard(
-                            modifier = Modifier.weight(1f),
-                            icon = if (repo.isPrivate) Icons.Default.Person else Icons.Default.Person,
-                            label = stringResource(R.string.visibility),
-                            value = if (repo.isPrivate) stringResource(R.string.private_name) else stringResource(
-                                R.string.public_name
-                            )
-                        )
-                    }
-
-                    Spacer(modifier = Modifier.height(Dimen.PaddingLarge))
-
-                    // Description
-                    Text(
-                        text = stringResource(R.string.about_the_repo),
-                        color = SoftWhite,
-                        style = MaterialTheme.typography.titleLarge,
-                        fontWeight = FontWeight.Bold
-                    )
-                    Spacer(modifier = Modifier.height(Dimen.PaddingSmall))
-                    repo.description?.let {
+                        // Description
                         Text(
-                            text = it,
+                            text = stringResource(R.string.about_the_repo),
                             color = SoftWhite,
-                            style = MaterialTheme.typography.bodyLarge,
-                            lineHeight = Dimen.LineHeight
+                            style = MaterialTheme.typography.titleLarge,
+                            fontWeight = FontWeight.Bold
                         )
-                    }
-
-                    Spacer(modifier = Modifier.height(Dimen.PaddingLarge))
-
-                    // Link Section
-                    Card(
-                        modifier = Modifier.fillMaxWidth(),
-                        colors = CardDefaults.cardColors(containerColor = SurfaceGrey),
-                        shape = RoundedCornerShape(Dimen.BorderWidth)
-                    ) {
-                        Row(
-                            modifier = Modifier.padding(Dimen.PaddingMedium),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Icon(Icons.Default.Link, contentDescription = null, tint = ElectricRed)
-                            Spacer(modifier = Modifier.width(Dimen.PaddingSmall))
+                        Spacer(modifier = Modifier.height(Dimen.PaddingSmall))
+                        repo.description?.let {
                             Text(
-                                text = repo.gitUrl,
+                                text = it,
                                 color = SoftWhite,
-                                style = MaterialTheme.typography.bodyMedium,
-                                fontWeight = FontWeight.Medium
+                                style = MaterialTheme.typography.bodyLarge,
+                                lineHeight = Dimen.LineHeight
                             )
+                        }
+
+                        Spacer(modifier = Modifier.height(Dimen.PaddingLarge))
+
+                        // Link Section
+                        Card(
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = CardDefaults.cardColors(containerColor = SurfaceGrey),
+                            shape = RoundedCornerShape(Dimen.BorderWidth)
+                        ) {
+                            Row(
+                                modifier = Modifier.padding(Dimen.PaddingMedium),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Icon(
+                                    Icons.Default.Link,
+                                    contentDescription = null,
+                                    tint = ElectricRed
+                                )
+                                Spacer(modifier = Modifier.width(Dimen.PaddingSmall))
+                                Text(
+                                    text = repo.gitUrl,
+                                    color = SoftWhite,
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    fontWeight = FontWeight.Medium
+                                )
+                            }
                         }
                     }
                 }
-            }
 
-            if (state.isLoading) {
-                LoadingView(isLoading = true)
+                LoadingView(isLoading = state.isLoading)
             }
         }
     }
