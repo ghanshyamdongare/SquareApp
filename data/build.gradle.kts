@@ -1,7 +1,7 @@
 plugins {
     alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.google.devtools.ksp)
-    id("com.google.dagger.hilt.android") apply false
+    alias(libs.plugins.hilt) apply false
 }
 
 dependencies {
