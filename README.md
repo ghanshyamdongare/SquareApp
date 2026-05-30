@@ -9,13 +9,20 @@ A production-ready **multi-module Android application** built with **Jetpack Com
 
 ## 🏗️ Project Structure
 
-com.gd.squareapp # Application/
-├── app/ # Presentation Layer (Compose UI + ViewModels)
-├── data/ # Data Layer (Repository impl + API)
-├── domain/ # Domain Layer (UseCases + Models + Gateways)
-├── gateway/ # Gateway Interfaces (API contracts)
-├── gradle/libs.versions.toml # Centralized versions + plugins
-└── build.gradle.kts (project) # Plugin declarations
+-- com.gd.squareapp # Application/
+
+-- app/ # Presentation Layer (Compose UI + ViewModels)
+
+-- data/ # Data Layer (Repository impl + API)
+
+-- domain/ # Domain Layer (UseCases + Models + Gateways)
+
+-- gateway/ # Gateway Interfaces (API contracts)
+
+-- gradle/libs.versions.toml # Centralized versions + plugins
+
+-- build.gradle.kts (project) # Plugin declarations
+
 
 ## ✨ Key Features
 
